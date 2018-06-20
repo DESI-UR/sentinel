@@ -12,11 +12,8 @@ function submit_jobs() {
     jobs_to_submit=$1
     list_files=`ls -t ${QUEUE_DIRECTORY} | tail -n ${jobs_to_submit}` 
     for file in ${list_files[@]}; do
-	echo "moved it to run directory"
 	mv ${QUEUE_DIRECTORY}/${file} ${RUN_DIRECTORY}/.
 	sed -i "s/queue/run/" ${RUN_DIRECTORY}/${file}
-	echo "submitting job"
-	#more ${RUN_DIRECTORY}/${file}
 	sbatch ${RUN_DIRECTORY}/${file}
     done
 }
