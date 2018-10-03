@@ -1,8 +1,8 @@
 #!/bin/env bash
 
 # set these values either in your bash profile or here
-MAX_NUM_JOBS=200
-WAIT_TIME=120s
+MAX_NUM_JOBS=600
+WAIT_TIME=10s
 
 QUEUE_DIRECTORY="queue"
 RUN_DIRECTORY="run"
@@ -21,7 +21,7 @@ function submit_jobs() {
 
 function run_sentinel() {
     while true; do
-	RUNNING_JOBS=`squeue -u ${USER} | wc -l || echo "failed"`
+	RUNNING_JOBS=`squeue -u ${USER} -r | wc -l || echo "failed"`
 	if [ "${RUNNING_JOBS}" == "failed" ]; then
 	    echo "problem with batch system..."
 	fi
@@ -31,7 +31,7 @@ function run_sentinel() {
 	let "SUBMIT_JOBS = ${MAX_NUM_JOBS} - ${NUM_RUNNING_JOBS}"
 	echo "Number of jobs to submit:   " ${SUBMIT_JOBS}
 	if [ ${SUBMIT_JOBS} -gt 0 ]; then
-	    submit_jobs ${SUBMIT_JOBS}
+	    submit_jobs 1 ###${SUBMIT_JOBS}
 	fi
 	echo "going to sleep"
 	sleep ${WAIT_TIME}
