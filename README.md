@@ -11,7 +11,7 @@ These directories will be used for pushing the jobs into slurm queue properly.
 
 Once these directories are set, user needs to start the sentinel. That can be done either by adding a line in crontab or running it interactively at the background. For the latter, the following line should executed in the sentinel main directory:
 
-sh sentinel.sh &> sentinel.log &
+nohup sh sentinel.sh &> sentinel.log &
 
 For the former, the example lines will be added later.
 
